@@ -3,6 +3,10 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\AnswerController;
+
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -17,4 +21,15 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/questions', [QuestionController::class, 'index'])->name('questions.index');
+    Route::get('/questions/create', [QuestionController::class, 'create'])->name('questions.create');
+    Route::post('/questions', [QuestionController::class, 'store'])->name('questions.store');
+    Route::get('/questions/{question}', [QuestionController::class, 'show'])->name('questions.show');
+
+    Route::post('/questions/{question}/answers', [AnswerController::class, 'store'])->name('answers.store');
+});
+
+
+require __DIR__ . '/auth.php';
