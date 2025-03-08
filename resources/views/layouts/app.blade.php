@@ -59,10 +59,7 @@
                                     <i class="fas fa-chevron-down ml-2 text-xs"></i>
                                 </button>
                                 <div class="absolute right-0 w-48 mt-2 py-2 bg-white rounded-md shadow-lg hidden group-hover:block">
-                                    <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-600">
-                                        <i class="fas fa-cog mr-2"></i>
-                                        Profile Settings
-                                    </a>
+                                    
                                     <a href="{{ route('logout') }}" 
                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-600">
@@ -106,10 +103,10 @@
                                 Register
                             </a>
                         @else
-                            <a href="{{ route('profile.edit') }}" class="block pl-3 pr-4 py-2 text-base font-medium text-gray-600 hover:text-indigo-600 hover:bg-indigo-50">
+                            {{-- <a href="{{ route('profile.edit') }}" class="block pl-3 pr-4 py-2 text-base font-medium text-gray-600 hover:text-indigo-600 hover:bg-indigo-50">
                                 <i class="fas fa-cog mr-2"></i>
                                 Profile Settings
-                            </a>
+                            </a> --}}
                             <a href="{{ route('logout') }}" 
                                onclick="event.preventDefault(); document.getElementById('mobile-logout-form').submit();"
                                class="block pl-3 pr-4 py-2 text-base font-medium text-gray-600 hover:text-indigo-600 hover:bg-indigo-50">
