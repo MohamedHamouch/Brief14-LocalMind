@@ -52,25 +52,31 @@
                                 Register
                             </a>
                         @else
-                            <div class="relative group">
-                                <button class="flex items-center text-sm font-medium text-gray-600 hover:text-indigo-600 focus:outline-none transition">
-                                    <i class="fas fa-user-circle mr-2 text-lg"></i>
-                                    <span>{{ Auth::user()->name }}</span>
-                                    <i class="fas fa-chevron-down ml-2 text-xs"></i>
-                                </button>
-                                <div class="absolute right-0 w-48 mt-2 py-2 bg-white rounded-md shadow-lg hidden group-hover:block">
-                                    
-                                    <a href="{{ route('logout') }}" 
-                                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-                                       class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-600">
-                                        <i class="fas fa-sign-out-alt mr-2"></i>
-                                        Logout
-                                    </a>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
-                                        @csrf
-                                    </form>
-                                </div>
+                        <div class="relative" x-data="{ open: false }" @click.away="open = false">
+                            <button @click="open = !open" class="flex items-center text-sm font-medium text-gray-600 hover:text-indigo-600 focus:outline-none transition">
+                                <i class="fas fa-user-circle mr-2 text-lg"></i>
+                                <span>{{ Auth::user()->name }}</span>
+                                <i class="fas fa-chevron-down ml-2 text-xs"></i>
+                            </button>
+                            <div x-show="open" 
+                                 x-transition:enter="transition ease-out duration-100"
+                                 x-transition:enter-start="transform opacity-0 scale-95"
+                                 x-transition:enter-end="transform opacity-100 scale-100"
+                                 x-transition:leave="transition ease-in duration-75"
+                                 x-transition:leave-start="transform opacity-100 scale-100"
+                                 x-transition:leave-end="transform opacity-0 scale-95"
+                                 class="absolute right-0 w-48 mt-2 py-2 bg-white rounded-md shadow-lg">
+                                <a href="{{ route('logout') }}" 
+                                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                                   class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-600">
+                                    <i class="fas fa-sign-out-alt mr-2"></i>
+                                    Logout
+                                </a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
+                                    @csrf
+                                </form>
                             </div>
+                        </div>
                         @endguest
                     </div>
 
