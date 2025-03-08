@@ -14,6 +14,7 @@ Route::get('/questions', [QuestionController::class, 'index'])->name('questions.
 Route::get('/questions/create', [QuestionController::class, 'create'])->name('questions.create')->middleware('auth');
 Route::post('/questions', [QuestionController::class, 'store'])->name('questions.store')->middleware('auth');
 Route::get('/questions/{id}', [QuestionController::class, 'show'])->name('questions.show');
+Route::post('/answers', [AnswerController::class, 'store'])->name('answers.store')->middleware('auth');
 
 
 Route::get('/debug', function () {
