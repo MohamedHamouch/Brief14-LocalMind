@@ -4,20 +4,26 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Question;
+use App\Models\Answer;
 
 class AnswerController extends Controller
 {
-    public function store(Request $request, Question $question)
+    public function store(Request $request)
     {
-        $request->validate([
-            'content' => 'required|string',
+        $validated = $request->validate([
+            'content' => 'required|min:10',
+            'question_id' => 'required|exists:questions,id'
         ]);
 
-        $question->answers()->create([
+        $answer = Answer::create([
+            'content' => $validated['content'],
+            'question_id' => $validated['question_id'],
             'user_id' => auth()->id(),
-            'content' => $request->content,
+            'answered_at' => now() ,
         ]);
 
-        return redirect()->route('questions.show', $question)->with('success', 'Answer added successfully.');
+        return redirect()
+            ->route('questions.show', $answer->question_id)
+            ->with('success', 'Your answer has been posted successfully!');
     }
 }

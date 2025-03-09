@@ -10,7 +10,7 @@ class QuestionController extends Controller
 {
     public function index()
     {
-        $questions = Question::with('user')->latest()->get();
+        $questions = Question::with('user')->latest()->paginate(8);
         return view('questions.index', compact('questions'));
     }
 
@@ -20,19 +20,21 @@ class QuestionController extends Controller
     }
     public function store(Request $request)
     {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'content' => 'required|string',
-            'place' => 'required|string|max:255',
+        $validated = $request->validate([
+            'title' => 'required|min:10|max:255',
+            'content' => 'required|min:10',
+            'place' => 'required|string',
+            'published_at' => 'required|date',
         ]);
-
-        $question = new Question();
-        $question->user_id = Auth::id();
-        $question->title = $request->title;
-        $question->content = $request->content;
-        $question->place = $request->place;
-        $question->published_at = now();
-        $question->save();
+    
+        $question = Question::create([
+            'title' => $validated['title'],
+            'content' => $validated['content'],
+            'place' => $validated['place'],
+            'published_at' => $validated['published_at'],
+            'user_id' => auth()->id(),
+        ]);
+    
 
         return redirect()->route('questions.index')->with('success', 'Question created successfully.');
     }
