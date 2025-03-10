@@ -17,8 +17,8 @@ Route::get('/questions/{id}', [QuestionController::class, 'show'])->name('questi
 Route::post('/answers', [AnswerController::class, 'store'])->name('answers.store')->middleware('auth');
 
 
-Route::get('/debug', function () {
-    dd(auth()->user());
-});
+// Route::get('/debug', function () {
+//     dd(auth()->user());
+// });
 
 require __DIR__ . '/auth.php';
